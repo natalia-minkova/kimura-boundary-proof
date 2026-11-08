@@ -1,0 +1,74 @@
+{
+  "profile": "kimura-phase1a2-mutations-local/1",
+  "results": [
+    {
+      "assertion_markers": [
+        "revoked IPC request must be denied",
+        "revocation must not commit inside Gate check-to-commit window",
+        "no endpoint effect must not report success"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 4,
+      "failed_test_methods": [
+        "test_check_to_commit_race_across_process_boundary",
+        "test_direct_requests_forgery_and_no_state_write_api",
+        "test_distinct_processes_revocation_and_fresh_grant",
+        "test_response_effect_consistency_after_denial"
+      ],
+      "failure_count": 4,
+      "mutation": "bypass_authorization",
+      "passed_count": 0,
+      "test_count": 4
+    },
+    {
+      "assertion_markers": [
+        "unauthorized direct IPC request must be denied",
+        "direct IPC bypass must not change protected state"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 1,
+      "failed_test_methods": [
+        "test_direct_requests_forgery_and_no_state_write_api"
+      ],
+      "failure_count": 3,
+      "mutation": "trust_caller_identity",
+      "passed_count": 3,
+      "test_count": 4
+    },
+    {
+      "assertion_markers": [
+        "revocation must not commit inside Gate check-to-commit window"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 1,
+      "failed_test_methods": [
+        "test_check_to_commit_race_across_process_boundary"
+      ],
+      "failure_count": 1,
+      "mutation": "remove_atomicity",
+      "passed_count": 3,
+      "test_count": 4
+    },
+    {
+      "assertion_markers": [
+        "revoked IPC request must be denied",
+        "no endpoint effect must not report success"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 3,
+      "failed_test_methods": [
+        "test_direct_requests_forgery_and_no_state_write_api",
+        "test_distinct_processes_revocation_and_fresh_grant",
+        "test_response_effect_consistency_after_denial"
+      ],
+      "failure_count": 3,
+      "mutation": "false_success",
+      "passed_count": 1,
+      "test_count": 4
+    }
+  ]
+}

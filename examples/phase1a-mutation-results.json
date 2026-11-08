@@ -1,0 +1,74 @@
+{
+  "profile": "kimura-phase1a-mutations-local/1",
+  "results": [
+    {
+      "assertion_markers": [
+        "revoked workflow must be denied",
+        "reference evidence must pass"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 3,
+      "failed_test_methods": [
+        "test_canonical_evidence_and_tamper_detection",
+        "test_result_requires_observed_effect",
+        "test_revocation_after_workflow_start_and_fresh_grant"
+      ],
+      "failing_tests": [
+        "test_canonical_evidence_and_tamper_detection (tests.test_phase1a.AgentToolIntegrationTests.test_canonical_evidence_and_tamper_detection)",
+        "test_result_requires_observed_effect (tests.test_phase1a.AgentToolIntegrationTests.test_result_requires_observed_effect)",
+        "test_revocation_after_workflow_start_and_fresh_grant (tests.test_phase1a.AgentToolIntegrationTests.test_revocation_after_workflow_start_and_fresh_grant)"
+      ],
+      "failure_count": 3,
+      "mutation": "bypass_gate",
+      "passed_count": 2,
+      "test_count": 5
+    },
+    {
+      "assertion_markers": [
+        "denial must not report success",
+        "reference evidence must pass"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 3,
+      "failed_test_methods": [
+        "test_canonical_evidence_and_tamper_detection",
+        "test_revocation_after_workflow_start_and_fresh_grant",
+        "test_scope_mismatch_principal_operation_and_target"
+      ],
+      "failing_tests": [
+        "test_canonical_evidence_and_tamper_detection (tests.test_phase1a.AgentToolIntegrationTests.test_canonical_evidence_and_tamper_detection)",
+        "test_revocation_after_workflow_start_and_fresh_grant (tests.test_phase1a.AgentToolIntegrationTests.test_revocation_after_workflow_start_and_fresh_grant)",
+        "test_scope_mismatch_principal_operation_and_target (tests.test_phase1a.AgentToolIntegrationTests.test_scope_mismatch_principal_operation_and_target) (changes={'agent_id': 'agent-8'})",
+        "test_scope_mismatch_principal_operation_and_target (tests.test_phase1a.AgentToolIntegrationTests.test_scope_mismatch_principal_operation_and_target) (changes={'operation': 'delete_case'})",
+        "test_scope_mismatch_principal_operation_and_target (tests.test_phase1a.AgentToolIntegrationTests.test_scope_mismatch_principal_operation_and_target) (changes={'target': 'case-200'})"
+      ],
+      "failure_count": 5,
+      "mutation": "false_success_after_denial",
+      "passed_count": 2,
+      "test_count": 5
+    },
+    {
+      "assertion_markers": [
+        "revoked workflow must be denied",
+        "reference evidence must pass"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 2,
+      "failed_test_methods": [
+        "test_canonical_evidence_and_tamper_detection",
+        "test_revocation_after_workflow_start_and_fresh_grant"
+      ],
+      "failing_tests": [
+        "test_canonical_evidence_and_tamper_detection (tests.test_phase1a.AgentToolIntegrationTests.test_canonical_evidence_and_tamper_detection)",
+        "test_revocation_after_workflow_start_and_fresh_grant (tests.test_phase1a.AgentToolIntegrationTests.test_revocation_after_workflow_start_and_fresh_grant)"
+      ],
+      "failure_count": 2,
+      "mutation": "stale_authorization",
+      "passed_count": 3,
+      "test_count": 5
+    }
+  ]
+}

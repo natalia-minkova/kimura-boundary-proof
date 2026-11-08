@@ -1,0 +1,27 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+.env
+.env.*
+*.tmp
+*.temp
+*.swp
+*~
+
+# Disposable evidence generated during local runs. Keep the reviewed examples.
+examples/*.json
+!examples/reference-evidence.json
+!examples/mutation-results.json
+!examples/phase1a-reference-evidence.json
+!examples/phase1a-mutation-results.json
+!examples/phase1a1-reference-evidence.json
+!examples/phase1a1-mutation-results.json
+!examples/phase1a2-reference-evidence.json
+!examples/phase1a2-mutation-results.json

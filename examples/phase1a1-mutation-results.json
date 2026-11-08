@@ -1,0 +1,95 @@
+{
+  "profile": "kimura-phase1a1-mutations-local/1",
+  "results": [
+    {
+      "assertion_markers": [
+        "principal binding must reject Bob"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 1,
+      "failed_test_methods": [
+        "test_alice_grant_used_by_bob"
+      ],
+      "failure_count": 1,
+      "mutation": "remove_principal_check",
+      "passed_count": 9,
+      "test_count": 10
+    },
+    {
+      "assertion_markers": [
+        "agent binding must reject Agent B"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 1,
+      "failed_test_methods": [
+        "test_agent_a_grant_used_by_agent_b"
+      ],
+      "failure_count": 1,
+      "mutation": "remove_agent_check",
+      "passed_count": 9,
+      "test_count": 10
+    },
+    {
+      "assertion_markers": [
+        "operation binding must reject delete"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 1,
+      "failed_test_methods": [
+        "test_wrong_operation"
+      ],
+      "failure_count": 1,
+      "mutation": "remove_operation_check",
+      "passed_count": 9,
+      "test_count": 10
+    },
+    {
+      "assertion_markers": [
+        "target binding must reject other case"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 1,
+      "failed_test_methods": [
+        "test_wrong_target"
+      ],
+      "failure_count": 1,
+      "mutation": "remove_target_check",
+      "passed_count": 9,
+      "test_count": 10
+    },
+    {
+      "assertion_markers": [
+        "caller identity claim must not override session"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 1,
+      "failed_test_methods": [
+        "test_claimed_identity_does_not_override_session"
+      ],
+      "failure_count": 1,
+      "mutation": "remove_claim_check",
+      "passed_count": 9,
+      "test_count": 10
+    },
+    {
+      "assertion_markers": [
+        "workflow continuation must retain identity"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failed_test_count": 1,
+      "failed_test_methods": [
+        "test_identity_change_during_workflow_continuation"
+      ],
+      "failure_count": 1,
+      "mutation": "remove_continuation_check",
+      "passed_count": 9,
+      "test_count": 10
+    }
+  ]
+}

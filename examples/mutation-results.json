@@ -1,0 +1,79 @@
+{
+  "profile": "kimura-boundary-mutations-local/1",
+  "results": [
+    {
+      "assertion_markers": [
+        "'CURRENT_AUTHORITY' != 'AUTHORITY_REVOKED'"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failing_tests": [
+        "test_check_to_commit_race (test_chain.ChainTests.test_check_to_commit_race)",
+        "test_evidence_canonical_integrity_and_rehash (test_chain.ChainTests.test_evidence_canonical_integrity_and_rehash)",
+        "test_reference_scenario_and_observed_state (test_chain.ChainTests.test_reference_scenario_and_observed_state)"
+      ],
+      "failure_count": 3,
+      "mutation": "stale_authorization_cache",
+      "passed_count": 1,
+      "race_traces": [
+        {
+          "endpoint_count": 1,
+          "events": [
+            "GRANT_ISSUED",
+            "ACTION_REQUESTED",
+            "AUTHORIZATION_DECISION",
+            "ACTION_COMMITTED",
+            "ACTION_OUTCOME",
+            "GRANT_REVOKED"
+          ],
+          "revocation_interleaved": false
+        }
+      ],
+      "state_traces": [
+        {
+          "after_revocation_executed": true,
+          "after_revocation_reason": "CURRENT_AUTHORITY",
+          "endpoint_count": 2
+        }
+      ],
+      "test_count": 4,
+      "test_exit_code": 1
+    },
+    {
+      "assertion_markers": [
+        "revocation must not commit inside the protected check-to-commit window"
+      ],
+      "detected": true,
+      "error_count": 0,
+      "failing_tests": [
+        "test_check_to_commit_race (test_chain.ChainTests.test_check_to_commit_race)"
+      ],
+      "failure_count": 1,
+      "mutation": "remove_atomicity",
+      "passed_count": 3,
+      "race_traces": [
+        {
+          "endpoint_count": 1,
+          "events": [
+            "GRANT_ISSUED",
+            "ACTION_REQUESTED",
+            "AUTHORIZATION_DECISION",
+            "GRANT_REVOKED",
+            "ACTION_COMMITTED",
+            "ACTION_OUTCOME"
+          ],
+          "revocation_interleaved": true
+        }
+      ],
+      "state_traces": [
+        {
+          "after_revocation_executed": false,
+          "after_revocation_reason": "AUTHORITY_REVOKED",
+          "endpoint_count": 1
+        }
+      ],
+      "test_count": 4,
+      "test_exit_code": 1
+    }
+  ]
+}
