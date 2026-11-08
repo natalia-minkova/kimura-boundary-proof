@@ -1,5 +1,21 @@
 # Kimura Boundary Proof — local reference experiments
 
+## Why Kimura Exists
+
+An AI agent may start a workflow with valid authorization, then reach the tool execution step after that authorization has been revoked or changed. Checking only when the workflow starts can leave a gap between the original request and the action that changes state.
+
+Kimura Boundary Proof provides reproducible reference tests for execution-time revocation, simulated principal and agent identity binding, operation and target scope binding, and check-to-commit races. The included agent-tool and process experiments use synthetic local state. This repository demonstrates those specific workflows; it does not automatically audit an arbitrary external AI agent or authenticate real users.
+
+## Quick Start
+
+From the repository root, run:
+
+```bash
+python3 evaluate.py
+```
+
+Requirements: Python 3.12 or later, a compatible POSIX environment with local Unix sockets and subprocess support, and writable temporary storage. No third-party Python packages are required. The command runs the tests, disposable mutation checks, and canonical evidence verification without changing the checked-in examples. A passing result shows that this reference implementation reproduces its stated behavior locally; it is not independent security validation. See `EXTERNAL_EVALUATION.md` for the full environment assumptions and security limits.
+
 ## Independent developer evaluation
 
 From a clean local clone or the evaluation archive, run `python3 evaluate.py`. This one command runs all 23 tests, checks all 15 disposable mutations, verifies four canonical evidence examples, and reproduces each example in temporary files. It requires Python 3.12+ and a Unix-like system that permits local `AF_UNIX` datagram socketpairs, inherited file descriptors, subprocesses, and writable temporary storage. No third-party package or network access is needed. See `EXTERNAL_EVALUATION.md` for installation, packaging, and the exact security and provenance limits. A local PASS is reproducibility evidence, not independent security validation.
@@ -10,7 +26,7 @@ A minimal **software-only verification-method prototype** for authority continui
 
 ## Run from a clean environment
 
-Python 3.12 or later and Git are sufficient. The project has **no third-party Python dependencies**. Do not install packages to run it.
+Python 3.12 or later is sufficient for the Phase 0 commands below. Git is needed to clone the repository, but not to run the code. The project has **no third-party Python dependencies**. Do not install packages to run it.
 
 ```bash
 python3 -m venv .venv
