@@ -1,0 +1,13 @@
+diff --git a/src/droneserver/safety/middleware.py b/src/droneserver/safety/middleware.py
+index 0feac20..645b3a6 100644
+--- a/src/droneserver/safety/middleware.py
++++ b/src/droneserver/safety/middleware.py
+@@ -311,7 +311,7 @@ async def _evaluate(tool: str, args: dict, ctx, s: SafetySettings) -> tuple[dict
+     tier, consequence = effective_tier(tool, args, state)
+ 
+     # 4. authorize
+-    if s.auth_enabled and not client.can(tier):
++    if s.auth_enabled and not client.can(tier) and not (tool == "control_managed_mission" and args.get("action") == "pause" and client.client_id == "observer" and client.scope == "telemetry"):
+         return auth_mod.authorization_failed_result(client, tool, tier), tier, client, state
+ 
+     # 5. rate limit (emergency stop is deliberately exempt)

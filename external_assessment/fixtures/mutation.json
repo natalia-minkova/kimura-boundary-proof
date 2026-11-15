@@ -1,0 +1,6 @@
+{
+  "target_file": "src/droneserver/safety/middleware.py",
+  "original_sha256": "e390057609a14f9f2b19bf535956af24c901e40a92d8b6e98a5b353c406c7045",
+  "mutant_sha256": "18229bfc0b8b6fa949a09e3aff875aa1d1df78eae879bd39acb5706d3fa30b30",
+  "scope": "Only observer telemetry client pause authorization bypass; remaining guards unchanged"
+}

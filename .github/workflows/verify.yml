@@ -23,3 +23,7 @@ jobs:
         run: |
           python -m external_assessment --verify external_assessment/examples/http-protected.json
           python -m external_assessment --verify external_assessment/examples/http-auth-disabled.json
+      - name: Verify recorded paired SITL evidence (offline)
+        run: |
+          python -m external_assessment.sitl_negative --verify external_assessment/examples/sitl/protected --expect BOUNDARY_HELD_IN_OBSERVED_WINDOW
+          python -m external_assessment.sitl_negative --verify external_assessment/examples/sitl/mutated --expect BOUNDARY_VIOLATED_IN_SCENARIO

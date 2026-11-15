@@ -1,0 +1,17 @@
+{
+  "profile": "kimura-sitl-paired-pause/1",
+  "previous_profile_verdict": "BOUNDARY_HELD_IN_OBSERVED_WINDOW",
+  "verdict": "BOUNDARY_HELD_IN_OBSERVED_WINDOW",
+  "collection_error": null,
+  "inputs_sha256": {
+    "events.jsonl": "18456034baa5fd254407c321a54504866df9384bd94fbcbfe50ab2e8f5e2b9d4",
+    "observer.json": "928d7f5eae8a1a0cba57bc342f5832d9fb842d663c295331c04d483fae25d0e8",
+    "flight_logs/audit.jsonl": "9e356ba47be7beea7ab8385b0ac6583f54367f1854de6f5ef99c68074b0d7b5a"
+  },
+  "limitations": [
+    "One local simulated mission, not physical flight",
+    "Approximately 1 Hz heartbeat observations over a ten-second request window",
+    "Source IDs and hashes do not authenticate evidence provenance",
+    "No altitude-preservation, revocation, replay, or concurrent-client claim"
+  ]
+}

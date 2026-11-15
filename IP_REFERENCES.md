@@ -27,3 +27,16 @@ The identity registry, bound-grant service, additional adapter checks, tests, ev
 ## Phase 1A.2 extension
 
 `process_isolation/`, `tests/test_phase1a2.py`, and `phase1a2_mutation_check.py` are original local experiment code. The trusted process composes the unchanged Phase 0 public API. The untrusted client is a standard-library-only script copied to a temporary directory at runtime. No external Kimura implementation or third-party package was identified as reused.
+
+## Optional SITL assessment
+
+The collector, evaluators and tests were developed for these local experiments.
+The collector imports pinned DroneServer integration helpers rather than copying
+them. The narrow mutation patch includes surrounding upstream middleware code;
+its source is PeterJBurke/droneserver at commit
+06b7d1a6a967553f1f8c025bb6b1fc79d346fd53. The corresponding upstream MIT license
+is retained as external_assessment/fixtures/DRONESERVER_LICENSE.txt. That notice
+applies to the upstream patch context; the repository's original code remains
+under its existing license. The generated observations/audit examples are lab
+artifacts, not authenticated third-party attestations. No ArduPilot source or
+simulator executable is included in this extension.
