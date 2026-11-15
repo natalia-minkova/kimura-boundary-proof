@@ -42,3 +42,11 @@ Checked results for this revision: 19 external unit tests pass; protected HTTP a
 The adapter CLI exits 2 with `assessment_completed: false` and no boundary verdict on incomplete execution (including timeout, transport failure, or invalid response). These failures do not produce evidence. Existing output files are refused. MCP errors are not counted as authorization denials. Contradictory positive-control responses produce `INCONCLUSIVE`. Evidence verification exit codes retain their separate integrity meaning.
 
 GitHub Actions runs `evaluate.py`, the external standard-library tests, and verification of both recorded HTTP evidence files. The external tests include injected timeout/connection failures, response parsing, and server-startup cleanup. CI does not install DroneServer or execute a live HTTP assessment; the paired HTTP runs are separately reproduced locally. The workflow is read-only and uses pinned action commits.
+
+## Separate SITL profile
+
+[SITL_ASSESSMENT.md](SITL_ASSESSMENT.md) adds an optional real simulator process,
+background mission runner and separate MAVLink observation. It has a distinct
+paired verdict profile and an injected authorization-failure control. It does
+not change or expand what the HTTP-only examples above establish. The combined
+external suite now has 45 tests; CI also re-evaluates both recorded SITL examples.

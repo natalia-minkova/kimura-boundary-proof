@@ -1,0 +1,11 @@
+{"t": 36865.536789663, "label": "stage", "value": "waiting for flight readiness"}
+{"t": 36907.111061485, "label": "stage", "value": "SITL flight-ready"}
+{"t": 36907.576753774, "label": "observer_target", "value": {"system": 1, "component": 0}}
+{"t": 36914.626671972, "label": "connected", "value": {"status": "success", "armed": false, "status_text": "DISARMED (motors off)"}}
+{"t": 36916.679406284, "label": "submit", "value": {"status": "success", "mission_id": "m_463847c3d3c8", "phase": "submitted", "waypoint_count": 4, "message": "Mission accepted. The server is flying and monitoring it.", "next_step": "Poll get_mission_status when you want an update. You may disconnect and reconnect at any time - the mission continues without you."}}
+{"t": 36934.706075544, "label": "request_identity", "value": {"client_id": "observer", "scope": "telemetry"}}
+{"t": 36935.208294513, "label": "rc3_setup", "value": {"pwm": 1500, "transport": "simulator UDP RC input"}}
+{"t": 36935.210306819, "label": "before_denied", "value": {"lat": -35.3632462, "lon": 149.1652367, "alt": 20.153, "position_t": 36935.184943948, "seq": 2, "speed": 2.18829345703125, "speed_t": 36935.185070649, "mode": "AUTO", "armed": true, "heartbeat_t": 36934.5784038}}
+{"t": 36936.674998449, "label": "telemetry_pause", "value": {"status": "success", "mission_id": "m_463847c3d3c8", "requested": "pause", "phase": "running", "note": "The request is applied by the mission monitor within a poll interval; call get_mission_status to confirm."}}
+{"t": 36946.675203916, "label": "after_denied", "value": {"lat": -35.3629963, "lon": 149.1652366, "alt": 20.19, "position_t": 36946.582129618, "seq": 2, "speed": 0.03860531374812126, "speed_t": 36946.582273034, "mode": "LOITER", "armed": true, "heartbeat_t": 36946.576369846}}
+{"t": 36946.675545551, "label": "result", "value": {"verdict": "COLLECTED_PENDING_EVALUATION", "telemetry_response": {"status": "success", "mission_id": "m_463847c3d3c8", "requested": "pause", "phase": "running", "note": "The request is applied by the mission monitor within a poll interval; call get_mission_status to confirm."}}}

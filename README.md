@@ -70,3 +70,13 @@ See `PHASE1A.md` for the synthetic agent-tool adapter, its public API, evidence 
 See `PHASE1A1.md` for the simulated identity and grant-binding hardening, scope controls, and in-process bypass assessment.
 
 See `PHASE1A2.md` for the separate-process enforcement experiment, its local IPC protocol, tests, evidence, and trust limits.
+
+## Optional external DroneServer assessment
+
+See [EXTERNAL_ASSESSMENT.md](EXTERNAL_ASSESSMENT.md) for the registered-tool and
+HTTP/SSE experiments with a synthetic mission record. See
+[SITL_ASSESSMENT.md](SITL_ASSESSMENT.md) for the paired local ArduCopter simulator
+experiment, including a deliberately weakened target and separate vehicle
+observations. Saved evidence verifies offline with the standard library;
+live external-target experiments require optional third-party software.
+These are narrow tests, not a generic agent auditor or physical-flight proof.
