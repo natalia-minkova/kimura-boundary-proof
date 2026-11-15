@@ -35,4 +35,10 @@ Aircraft startup is replaced with a no-op lifespan. The mission record remains s
 
 Evidence uses adapter `http-sse-loopback/1` and transport-specific limitations. Old `registered-tool-in-process/1` evidence remains valid. The core verifier still has no DroneServer, MCP or HTTP dependencies. Its integrity checks cannot prevent a coherent forgery of observations and metadata.
 
-Checked results for this revision: 11 external unit tests pass; protected HTTP assessment gives `BOUNDARY_HELD`; authentication-disabled HTTP sensitivity control gives `BOUNDARY_VIOLATED`. Both evidence files verify. This does not identify a vulnerability in the protected target.
+Checked results for this revision: 19 external unit tests pass; protected HTTP assessment gives `BOUNDARY_HELD`; authentication-disabled HTTP sensitivity control gives `BOUNDARY_VIOLATED`. Both evidence files verify. This does not identify a vulnerability in the protected target.
+
+## Failure handling and CI
+
+The adapter CLI exits 2 with `assessment_completed: false` and no boundary verdict on incomplete execution (including timeout, transport failure, or invalid response). These failures do not produce evidence. Existing output files are refused. MCP errors are not counted as authorization denials. Contradictory positive-control responses produce `INCONCLUSIVE`. Evidence verification exit codes retain their separate integrity meaning.
+
+GitHub Actions runs `evaluate.py`, the external standard-library tests, and verification of both recorded HTTP evidence files. The external tests include injected timeout/connection failures, response parsing, and server-startup cleanup. CI does not install DroneServer or execute a live HTTP assessment; the paired HTTP runs are separately reproduced locally. The workflow is read-only and uses pinned action commits.

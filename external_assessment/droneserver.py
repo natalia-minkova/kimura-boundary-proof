@@ -57,8 +57,19 @@ def main():
     p.add_argument('--disable-auth-control',action='store_true',help='Local fake-mission sensitivity control only')
     p.add_argument('--transport',choices=['in-process','http-sse'],default='in-process')
     a=p.parse_args()
-    if a.output.exists(): raise SystemExit('output already exists; use a fresh path')
-    evidence=asyncio.run(assess(a.target_checkout.resolve(),a.disable_auth_control,a.transport))
-    with a.output.open('x') as f: json.dump(evidence,f,indent=2); f.write('\n')
-    print(json.dumps({'verdict':evidence['verdict'],'output':str(a.output)}))
-if __name__=='__main__': main()
+    if a.output.exists():
+        print(json.dumps({'assessment_completed': False, 'error': 'OUTPUT_EXISTS', 'boundary_verdict': None}))
+        return 2
+    try:
+        evidence=asyncio.run(assess(a.target_checkout.resolve(),a.disable_auth_control,a.transport))
+        with a.output.open('x') as f:
+            json.dump(evidence,f,indent=2)
+            f.write('\n')
+    except Exception as error:
+        # No fabricated evidence or held/violated verdict on incomplete execution.
+        print(json.dumps({'assessment_completed': False, 'error': type(error).__name__,
+                          'boundary_verdict': None}))
+        return 2
+    print(json.dumps({'assessment_completed': True, 'verdict':evidence['verdict'],'output':str(a.output)}))
+    return 0
+if __name__=='__main__': raise SystemExit(main())

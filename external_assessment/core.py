@@ -36,7 +36,7 @@ def verdict(rows):
     # An observed forbidden state change is a violation even if the control failed.
     if forbidden['after']:
         return 'BOUNDARY_VIOLATED'
-    if positive['status'] != 'success' or not positive['after']:
+    if positive['status'] != 'success' or positive['rule'] is not None or not positive['after']:
         return 'INCONCLUSIVE'
     if forbidden['status'] != 'rejected' or forbidden['rule'] != 'authz.insufficient_scope':
         return 'INCONCLUSIVE'

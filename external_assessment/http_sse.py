@@ -4,6 +4,8 @@ from contextlib import AsyncExitStack, asynccontextmanager
 import json
 import socket
 
+ASSESSMENT_TIMEOUT_S = 20
+
 
 def parse_result(result):
     if result.isError:
@@ -35,17 +37,18 @@ async def observe(mcp, runner):
 
     original_lifespan = mcp._mcp_server.lifespan
     mcp._mcp_server.lifespan = no_aircraft
-    sock = socket.socket()
+    sock = None
     task = None
     server = None
     rows = []
     try:
+        sock = socket.socket()
         sock.bind(('127.0.0.1', 0))
         sock.listen(128)
         port = sock.getsockname()[1]
         server = uvicorn.Server(uvicorn.Config(mcp.sse_app(), log_level='error', lifespan='on', ws='none'))
         task = asyncio.create_task(server.serve(sockets=[sock]))
-        async with asyncio.timeout(20):
+        async with asyncio.timeout(ASSESSMENT_TIMEOUT_S):
             while not server.started:
                 if task.done():
                     await task
@@ -80,5 +83,6 @@ async def observe(mcp, runner):
                     task.cancel()
                     await asyncio.gather(task, return_exceptions=True)
         finally:
-            sock.close()
+            if sock is not None:
+                sock.close()
             mcp._mcp_server.lifespan = original_lifespan
