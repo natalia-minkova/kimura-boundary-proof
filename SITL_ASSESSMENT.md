@@ -116,10 +116,13 @@ option. It returns 0 for either conclusive verdict and 2 for an inconclusive
 assessment; preflight failures may exit nonzero without complete evidence.
 Always inspect `kimura-verdict.json`, not exit 0 alone.
 
-The runner is intentionally the same source as the recorded paired experiment.
-Its inherited `--rc3` option is retained for fidelity: pass 1500; this paired
-scenario always sets neutral 1500 before the request. Configuration cleanup is
-left for a later change rather than silently rewriting the tested collector.
+The recorded manifests identify the original collection source. Review hardening
+adds stricter evidence validation and cleanup; those historical manifests and
+logs are not rewritten to pretend they came from this newer source. The paired
+scenario requires neutral throttle: `--rc3` defaults to 1500 and rejects 1000
+before startup. Live collection was not repeated after these review changes;
+recorded evidence, CLI rejection and process cleanup were checked separately.
+See [SITL_REVIEW.md](SITL_REVIEW.md) for the review findings and validation.
 
 ## RC diagnosis and scope
 
@@ -143,3 +146,10 @@ concurrency, model-driven behavior, physical aircraft or general security proof.
 CI verifies saved evidence and standard-library tests only. Live SITL remains
 an optional local experiment. Original reference enforcement and its 23 tests,
 15 mutation checks and four evidence examples remain unchanged.
+
+The paired profile requires explicit source IDs on the request-window samples,
+strictly increasing sample/heartbeat times, and exactly one matching successful
+authenticated operator-pause audit row for the protected positive control. A
+missing or contradictory positive audit is inconclusive. A recorded collection
+error prevents the verifier from accepting a conclusive result. These checks
+reduce accidental false conclusions; they do not prevent coherent local forgery.

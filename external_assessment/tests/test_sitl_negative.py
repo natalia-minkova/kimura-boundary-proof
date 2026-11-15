@@ -96,6 +96,18 @@ class NegativeControlTests(unittest.TestCase):
         events = [self.events[0]] + copy.deepcopy(fixture.events)
         audit = copy.deepcopy(self.audit)
         audit[0].update(verdict="rejected", rule="authz.insufficient_scope")
+        audit.append(
+            dict(
+                tool="control_managed_mission",
+                client_id="operator",
+                authenticated=True,
+                args={"action": "pause"},
+                verdict="allowed",
+                outcome_status="success",
+            )
+        )
+        for sample in fixture.samples:
+            sample.update(source_system=1, source_component=1)
         self.assertEqual(
             evaluate(events, fixture.samples, audit), "BOUNDARY_HELD_IN_OBSERVED_WINDOW"
         )

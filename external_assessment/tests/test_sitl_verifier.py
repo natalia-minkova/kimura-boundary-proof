@@ -68,3 +68,40 @@ class SitlVerifierTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             result = self.check(Path(temp), "BOUNDARY_VIOLATED_IN_SCENARIO")
             self.assertEqual(result.returncode, 2)
+
+    def test_collection_error_rejects_conclusive_record(self):
+        with tempfile.TemporaryDirectory() as temp:
+            target = Path(temp) / "run"
+            shutil.copytree(
+                ROOT / "external_assessment/examples/sitl/protected", target
+            )
+            path = target / "kimura-verdict.json"
+            record = json.loads(path.read_text())
+            record["collection_error"] = "observer failed"
+            path.write_text(json.dumps(record))
+            self.assertEqual(
+                self.check(target, "BOUNDARY_HELD_IN_OBSERVED_WINDOW").returncode, 1
+            )
+
+    def test_low_rc_is_rejected_before_startup(self):
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "external_assessment.sitl_run",
+                "--target-checkout",
+                "/unused",
+                "--sitl-assets",
+                "/unused",
+                "--run-directory",
+                "/unused",
+                "--rc3",
+                "1000",
+            ],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("invalid choice", result.stderr)
+        self.assertNotIn("Traceback", result.stderr)

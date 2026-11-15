@@ -21,6 +21,45 @@ DRONESERVER_COMMIT = "06b7d1a6a967553f1f8c025bb6b1fc79d346fd53"
 SITL_SHA256 = "b9035c08f003ab296b8af71f793a1dd790cd8a327f8a2e8f4aa1425953922a04"
 
 
+def cleanup_run(stop, thread, observer, processes, logs):
+    """Attempt every teardown even if an observer or earlier process fails."""
+    errors = []
+    stop.set()
+    if thread:
+        try:
+            thread.join(2)
+        except Exception as error:
+            errors.append(error)
+    if observer:
+        try:
+            observer.close()
+        except Exception as error:
+            errors.append(error)
+    for process in reversed(processes):
+        try:
+            try:
+                os.killpg(process.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
+            try:
+                process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+                process.wait(timeout=5)
+        except Exception as error:
+            errors.append(error)
+    for stream in logs:
+        try:
+            stream.close()
+        except Exception as error:
+            errors.append(error)
+    if errors:
+        raise RuntimeError("SITL cleanup failed: " + "; ".join(str(e) for e in errors))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--target-checkout", type=Path, required=True)
@@ -37,7 +76,13 @@ def main():
         help="New directory; an existing directory is refused",
     )
     parser.add_argument("--base-port", type=int, default=15760)
-    parser.add_argument("--rc3", type=int, choices=(1000, 1500), required=True)
+    parser.add_argument(
+        "--rc3",
+        type=int,
+        choices=(1500,),
+        default=1500,
+        help="This paired profile requires neutral simulated throttle",
+    )
     parser.add_argument("--mutation-manifest", type=Path)
     args = parser.parse_args()
     if not 1024 <= args.base_port <= 65532:
@@ -379,24 +424,9 @@ def main():
         Path("result.json").write_text(json.dumps(result, indent=2))
         record("result", result)
     finally:
-        stop.set()
-        if thread:
-            thread.join(2)
-        if observer:
-            observer.close()
+        # Teardown must run before potentially failing evidence-file writes.
+        cleanup_run(stop, thread, observer, procs, logs)
         Path("observer.json").write_text(json.dumps(samples, indent=2))
-        for p in reversed(procs):
-            try:
-                os.killpg(p.pid, signal.SIGTERM)
-            except ProcessLookupError:
-                pass
-            try:
-                p.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                os.killpg(p.pid, signal.SIGKILL)
-                p.wait()
-        for f in logs:
-            f.close()
 
     events = [
         json.loads(line) for line in Path("events.jsonl").read_text().splitlines()

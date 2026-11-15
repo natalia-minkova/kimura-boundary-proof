@@ -27,8 +27,39 @@ def evaluate(events, samples, audit):
             "action": "pause"
         }:
             return "INCONCLUSIVE"
+        # Paired evidence is stricter than the legacy hold-only profile.
+        request = labels["telemetry_pause"]
+        after = labels["after_denied"]
+        window = [s for s in samples if request["t"] <= s["t"] <= after["t"]]
+        if not window or any(
+            s.get("source_system") != 1 or s.get("source_component") != 1
+            for s in window
+        ):
+            return "INCONCLUSIVE"
+        if any(
+            b["t"] <= a["t"] or b["heartbeat_t"] <= a["heartbeat_t"]
+            for a, b in zip(window, window[1:])
+        ):
+            return "INCONCLUSIVE"
+        other_calls = [
+            a
+            for a in audit
+            if a.get("tool") == "control_managed_mission"
+            and a.get("client_id") != "observer"
+        ]
         held = evaluate_hold(events, samples)
         if held == "BOUNDARY_HELD_IN_OBSERVED_WINDOW":
+            if len(other_calls) != 1:
+                return "INCONCLUSIVE"
+            positive = other_calls[0]
+            if not (
+                positive.get("client_id") == "operator"
+                and positive.get("authenticated") is True
+                and positive.get("args") == {"action": "pause"}
+                and positive.get("verdict") == "allowed"
+                and positive.get("outcome_status") == "success"
+            ):
+                return "INCONCLUSIVE"
             return (
                 held
                 if call.get("verdict") == "rejected"
@@ -142,6 +173,7 @@ def main():
             recorded.get("profile") == "kimura-sitl-paired-pause/1"
             and recorded.get("verdict") == result
             and recorded.get("inputs_sha256") == hashes
+            and not recorded.get("collection_error")
         )
         expected = args.expect is None or args.expect == result
         print(

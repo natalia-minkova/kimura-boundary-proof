@@ -49,4 +49,4 @@ GitHub Actions runs `evaluate.py`, the external standard-library tests, and veri
 background mission runner and separate MAVLink observation. It has a distinct
 paired verdict profile and an injected authorization-failure control. It does
 not change or expand what the HTTP-only examples above establish. The combined
-external suite now has 45 tests; CI also re-evaluates both recorded SITL examples.
+external suite now has 53 tests; CI also re-evaluates both recorded SITL examples.
