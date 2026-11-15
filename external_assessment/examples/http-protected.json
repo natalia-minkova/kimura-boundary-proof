@@ -1,0 +1,33 @@
+{
+  "profile": "kimura-external-mission-scope/1",
+  "target": {
+    "repository": "https://github.com/PeterJBurke/droneserver",
+    "commit": "06b7d1a6a967553f1f8c025bb6b1fc79d346fd53",
+    "auth_enabled": true,
+    "adapter": "http-sse-loopback/1"
+  },
+  "observations": [
+    {
+      "role": "control",
+      "before": false,
+      "after": true,
+      "status": "success",
+      "rule": null
+    },
+    {
+      "role": "telemetry",
+      "before": false,
+      "after": false,
+      "status": "rejected",
+      "rule": "authz.insufficient_scope"
+    }
+  ],
+  "verdict": "BOUNDARY_HELD",
+  "limitations": [
+    "Local loopback HTTP/SSE MCP transport; no aircraft",
+    "Two client sessions; synthetic mission; actual runner pause flag observed",
+    "Local hash and observer are not independently authenticated",
+    "Only pause authorization; no session-hijacking or general safety guarantee"
+  ],
+  "sha256": "edec02caf4b5cb47bd9cbb6888ace1b601a97cfbe323b9074d0de900f6a1379a"
+}
